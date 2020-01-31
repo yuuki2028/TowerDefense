@@ -10,24 +10,25 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Silverfish
 
-object SilverfishLevelOne : Monster(Material.SALMON){
+object SilverfishLevelTwo : Monster(Material.SALMON) {
     init {
         val meta = this.itemMeta
-        meta!!.setDisplayName("ロックフィッシュ")
-        meta.lore = mutableListOf("hp->10", "speed->2.0", "cost->5", "inCoin->1")
+        meta!!.setDisplayName("アイアンフィッシュ")
+        meta.lore = mutableListOf("hp->100", "speed->2.5", "cost->60", "inCoin->5")
         this.itemMeta = meta
     }
-    override var name = "ロックフィッシュ"
-    override var hp = 10
-    override var speed = 2.0
-    override var cost = 5
-    override var inCoin = 1
-    override var xp = 0
+
+    override var name = "アイアンフィッシュ"
+    override var hp = 100
+    override var speed = 2.5
+    override var cost = 60
+    override var inCoin = 5
+    override var xp = 10
     override var afters = mutableListOf<Monster>()
     override var modules = mutableListOf(CommonDamageModules.NULL.function)
     override fun createEntity(player: Player): LivingEntity {
         val entity = Bukkit.getWorld("world")!!.spawnEntity(TowerDefense.status[player.uniqueId]!!.spawnMonsterLocation, EntityType.SILVERFISH) as Silverfish
-        entity.customName =this.name
+        entity.customName = this.name
         entity.maxHealth = this.hp.toDouble()
         entity.health = hp.toDouble()
         return entity

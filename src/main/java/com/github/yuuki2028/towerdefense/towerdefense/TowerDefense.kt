@@ -150,7 +150,13 @@ class TowerDefense : JavaPlugin(),Listener {
                         "モンスター強化"-> {
                             for(monster in status[event.whoClicked.uniqueId]!!.monsterInventory.contents){
                                 if(monster == status[event.whoClicked.uniqueId]!!.beforeMonster){
-                                     status[event.whoClicked.uniqueId]!!.monsterInventory.let { it.setItem(it.first(monster),inventoryCommon.getMonsterfromItemStack(item)) }
+                                    var monsterData = inventoryCommon.getMonsterfromItemStack(item)
+                                    if (monsterData != null) {
+                                        if (status[event.whoClicked.uniqueId]!!.xp >= monsterData.xp) {
+                                            status[event.whoClicked.uniqueId]!!.monsterInventory.let { it.setItem(it.first(monster), monsterData) }
+                                            status[event.whoClicked.uniqueId]!!.xp -= monsterData.xp
+                                        }
+                                    }
                                 }
                             }
                         }

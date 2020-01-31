@@ -7,5 +7,5 @@ class MonsterEntity(monster: Monster, entity: Entity,player: Player){
     val entity = entity
     val monster = monster
     val player = player
-    var remoteness = 0
+    var remoteness = 0.0
 }
