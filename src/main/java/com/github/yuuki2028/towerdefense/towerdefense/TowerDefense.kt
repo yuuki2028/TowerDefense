@@ -1,5 +1,4 @@
 package com.github.yuuki2028.towerdefense.towerdefense
-import net.minecraft.server.v1_15_R1.*
 import com.github.yuuki2028.towerdefense.towerdefense.Commons.EntityCommon
 import com.github.yuuki2028.towerdefense.towerdefense.Commons.PlayerCommon
 import com.github.yuuki2028.towerdefense.towerdefense.Commons.ScoreboardCommon
@@ -8,10 +7,9 @@ import com.github.yuuki2028.towerdefense.towerdefense.Events.AttackEvent
 import com.github.yuuki2028.towerdefense.towerdefense.Events.DamageEvent
 import com.github.yuuki2028.towerdefense.towerdefense.Monsters.Silverfish.SilverfishLevelOne
 import com.github.yuuki2028.towerdefense.towerdefense.Towers.Skeleton.SkeletonLevelOne
-import org.bukkit.Bukkit
-import org.bukkit.ChatColor
-import org.bukkit.Location
-import org.bukkit.Material
+import net.minecraft.server.v1_15_R1.EntityInsentient
+import net.minecraft.server.v1_15_R1.PathfinderGoalSelector
+import org.bukkit.*
 import org.bukkit.block.BlockFace
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarFlag
@@ -33,7 +31,6 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitScheduler
 import org.bukkit.scoreboard.*
-import org.bukkit.scoreboard.Scoreboard
 import java.util.*
 
 class TowerDefense : JavaPlugin(),Listener {
@@ -262,8 +259,14 @@ class TowerDefense : JavaPlugin(),Listener {
                                             status[player.uniqueId]!!.monsters.remove(goalMonsterEntity)
                                             PlayerCommon.updateHealth(player)
                                             goalEntity.remove()
-                                            if(status[player.uniqueId]!!.health<=0){
-                                                
+                                            if (status[player.uniqueId]!!.health <= 0) {
+                                                for (tower in status[player.uniqueId]!!.towers) {
+                                                    tower.entity.remove()
+                                                }
+                                                for (monster in status[player.uniqueId]!!.monsters) {
+                                                    monster.entity.remove()
+                                                }
+                                                player.gameMode = GameMode.SPECTATOR
                                             }
                                         }
                                     }
