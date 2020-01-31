@@ -1,0 +1,9 @@
+name: TowerDefense
+version: ${project.version}
+main: com.github.yuuki2028.towerdefense.towerdefense.TowerDefense
+api-version: 1.13
+authors: [yuuki2028]
+description: TowerDefensePlugin
+commands:
+  TowerDefense:
+    description: 説明はないよ( ^ω^ )
