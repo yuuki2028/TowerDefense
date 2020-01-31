@@ -104,6 +104,8 @@ class TowerDefense : JavaPlugin(),Listener {
                                     val entity = tower.createEntity(event.whoClicked as Player)
                                     status[event.whoClicked.uniqueId]!!.towers.add(TowerEntity(tower, entity))
                                     status[event.whoClicked.uniqueId]!!.coin -= tower.cost
+                                } else {
+                                    event.whoClicked.sendMessage("コインが足りません！！")
                                 }
                             }
                         }
@@ -118,6 +120,8 @@ class TowerDefense : JavaPlugin(),Listener {
                                     val entity = afterTower.createEntity(event.whoClicked as Player)
                                     status[event.whoClicked.uniqueId]!!.towers.add(TowerEntity(afterTower, entity))
                                     status[event.whoClicked.uniqueId]!!.coin -= (afterTower.cost - beforeTower.tower.cost)
+                                } else {
+                                    event.whoClicked.sendMessage("コインが足りません！！")
                                 }
                             }
                         }
@@ -136,6 +140,8 @@ class TowerDefense : JavaPlugin(),Listener {
                                     }
                                     status[event.whoClicked.uniqueId]!!.coin -= monster.cost
                                     status[event.whoClicked.uniqueId]!!.inCoin += monster.inCoin
+                                } else {
+                                    event.whoClicked.sendMessage("コインが足りません！！")
                                 }
                             }
                             else if(event.isLeftClick){
@@ -155,6 +161,8 @@ class TowerDefense : JavaPlugin(),Listener {
                                         if (status[event.whoClicked.uniqueId]!!.xp >= monsterData.xp) {
                                             status[event.whoClicked.uniqueId]!!.monsterInventory.let { it.setItem(it.first(monster), monsterData) }
                                             status[event.whoClicked.uniqueId]!!.xp -= monsterData.xp
+                                        } else {
+                                            event.whoClicked.sendMessage("経験値が足りません！！")
                                         }
                                     }
                                 }
