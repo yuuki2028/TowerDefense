@@ -1,6 +1,6 @@
 package com.github.yuuki2028.towerdefense.towerdefense
 
-import com.github.yuuki2028.towerdefense.towerdefense.Events.DamageEvent
+import com.github.yuuki2028.towerdefense.towerdefense.Events.AttackEvent
 import org.bukkit.Material
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
@@ -14,6 +14,6 @@ abstract class Monster(type: Material): ItemStack(type){
     abstract var inCoin: Int
     abstract var xp: Int
     abstract var afters: MutableList<Monster>
-    abstract var modules: MutableList<(DamageEvent) -> Double>
+    abstract var modules: MutableList<(AttackEvent) -> AttackEvent>
     abstract fun createEntity(player: Player): LivingEntity
 }

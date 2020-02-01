@@ -4,7 +4,6 @@ import com.github.yuuki2028.towerdefense.towerdefense.Commons.PlayerCommon
 import com.github.yuuki2028.towerdefense.towerdefense.Commons.ScoreboardCommon
 import com.github.yuuki2028.towerdefense.towerdefense.Commons.inventoryCommon
 import com.github.yuuki2028.towerdefense.towerdefense.Events.AttackEvent
-import com.github.yuuki2028.towerdefense.towerdefense.Events.DamageEvent
 import com.github.yuuki2028.towerdefense.towerdefense.Monsters.Silverfish.SilverfishLevelOne
 import com.github.yuuki2028.towerdefense.towerdefense.Towers.Skeleton.SkeletonLevelOne
 import net.minecraft.server.v1_15_R1.EntityInsentient
@@ -111,6 +110,7 @@ class TowerDefense : JavaPlugin(),Listener {
                         }
                         "タワー強化"->{
                             val beforeTower = EntityCommon.getTowerEntityFromEntity(status[event.whoClicked.uniqueId]!!.crickEntity, event.whoClicked as Player)
+                            status[event.whoClicked.uniqueId]!!.spawnTowerLocation = (beforeTower!!.entity as LivingEntity).location
                             val afterTower = inventoryCommon.getJobfromItemStack(item)!!
                             if (beforeTower != null) {
                                 if ((afterTower.cost - beforeTower.tower.cost) <= status[event.whoClicked.uniqueId]!!.coin) {
@@ -130,8 +130,8 @@ class TowerDefense : JavaPlugin(),Listener {
                                 val monster = inventoryCommon.getMonsterfromItemStack(item)!!
                                 if (monster.cost <= status[event.whoClicked.uniqueId]!!.coin) {
                                     for(player in PlayerCommon.getAllPlayer()) {
-                                        val entity = monster.createEntity(event.whoClicked as Player)
-                                        val loc = status[event.whoClicked.uniqueId]!!.goalGate
+                                        val entity = monster.createEntity(player)
+                                        val loc = status[player.uniqueId]!!.goalGate
                                         val cEntity = ((entity as CraftEntity).handle as EntityInsentient)
                                         val path = PathfinderGoalWalkToLoc(cEntity, loc, monster.speed / 2.0)
                                         cEntity.goalSelector = PathfinderGoalSelector(cEntity.world.methodProfiler)
@@ -149,13 +149,14 @@ class TowerDefense : JavaPlugin(),Listener {
                                 val upGradeInventory = Bukkit.createInventory(null, InventoryType.DISPENSER, "モンスター強化")
                                 for (after in beforeMonster.afters) {
                                     upGradeInventory.addItem(after)
+                                    status[event.whoClicked.uniqueId]!!.beforeMonster = beforeMonster
                                     event.whoClicked.openInventory(upGradeInventory)
                                 }
                             }
                         }
                         "モンスター強化"-> {
                             for(monster in status[event.whoClicked.uniqueId]!!.monsterInventory.contents){
-                                if(monster == status[event.whoClicked.uniqueId]!!.beforeMonster){
+                                if (inventoryCommon.getMonsterfromItemStack(monster)!!.name == status[event.whoClicked.uniqueId]!!.beforeMonster.name) {
                                     var monsterData = inventoryCommon.getMonsterfromItemStack(item)
                                     if (monsterData != null) {
                                         if (status[event.whoClicked.uniqueId]!!.xp >= monsterData.xp) {
@@ -243,13 +244,14 @@ class TowerDefense : JavaPlugin(),Listener {
                                                 val monster = EntityCommon.getMonsterEntityFromEntity(entity,player)
                                                 if(monster != null) {
                                                     var damage = towerEntity.tower.damage.toDouble()
+                                                    var AE = AttackEvent(damage, towerEntity, monster)
                                                     for (function in towerEntity.tower.attackModules) {
-                                                        damage = function.invoke(AttackEvent(damage))
+                                                        AE = function.invoke(AE)
                                                     }
                                                     for (function in monster.monster.modules) {
-                                                        damage = function.invoke(DamageEvent(damage))
+                                                        AE = function.invoke(AE)
                                                     }
-                                                    entity.damage(damage)
+                                                    (AE.monster.entity as LivingEntity).damage(damage)
                                                     towerEntity.entity.velocity = EntityCommon.genVec(towerEntity.entity.location, entity.location)
                                                 }
                                             }
@@ -291,11 +293,11 @@ class TowerDefense : JavaPlugin(),Listener {
                 }
                 "setGate"->{
                     val player = Bukkit.getPlayer(args[1])!!
-                    status[player.uniqueId]!!.goalGate = player.location
+                    status[player.uniqueId]!!.goalGate = sender.location
                 }
                 "setStart"->{
                     val player = Bukkit.getPlayer(args[1])!!
-                    status[player.uniqueId]!!.spawnMonsterLocation = player.location
+                    status[player.uniqueId]!!.spawnMonsterLocation = sender.location
                 }
             }
         }

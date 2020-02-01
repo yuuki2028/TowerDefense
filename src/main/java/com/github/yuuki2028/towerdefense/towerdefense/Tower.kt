@@ -15,8 +15,8 @@ abstract class Tower(type:Material):ItemStack(type){
     abstract var speed:Int
     abstract var cost:Int
     abstract var afters:MutableList<Tower>
-    abstract var attackSound:Sound
-    abstract var attackModules: MutableList<(AttackEvent) -> Double>
+    abstract var attackSound: Sound
+    abstract var attackModules: MutableList<(AttackEvent) -> AttackEvent>
     abstract fun createEntity(player: Player):LivingEntity
     abstract fun getAttackEntity(entity: Entity):MutableList<LivingEntity>
 }

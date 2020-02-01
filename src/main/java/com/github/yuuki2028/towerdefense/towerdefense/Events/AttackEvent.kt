@@ -1,4 +1,6 @@
 package com.github.yuuki2028.towerdefense.towerdefense.Events
 
-data class AttackEvent(val damage:Double){
-}
+import com.github.yuuki2028.towerdefense.towerdefense.MonsterEntity
+import com.github.yuuki2028.towerdefense.towerdefense.TowerEntity
+
+data class AttackEvent(var damage: Double, val tower: TowerEntity, var monster: MonsterEntity)

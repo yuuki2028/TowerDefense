@@ -1,6 +1,6 @@
 package com.github.yuuki2028.towerdefense.towerdefense.Monsters.Silverfish
 
-import com.github.yuuki2028.towerdefense.towerdefense.Module.CommonDamageModules
+import com.github.yuuki2028.towerdefense.towerdefense.Module.CommonAttackModules
 import com.github.yuuki2028.towerdefense.towerdefense.Monster
 import com.github.yuuki2028.towerdefense.towerdefense.TowerDefense
 import org.bukkit.Bukkit
@@ -25,7 +25,7 @@ object SilverfishLevelTwo : Monster(Material.SALMON) {
     override var inCoin = 5
     override var xp = 10
     override var afters = mutableListOf<Monster>()
-    override var modules = mutableListOf(CommonDamageModules.NULL.function)
+    override var modules = mutableListOf(CommonAttackModules.NULL.function)
     override fun createEntity(player: Player): LivingEntity {
         val entity = Bukkit.getWorld("world")!!.spawnEntity(TowerDefense.status[player.uniqueId]!!.spawnMonsterLocation, EntityType.SILVERFISH) as Silverfish
         entity.customName = this.name

@@ -9,20 +9,20 @@ import org.bukkit.Sound
 import org.bukkit.entity.*
 import org.bukkit.inventory.ItemStack
 
-object SkeletonLevelTwo : Tower(Material.BONE) {
+object SkeletonLevelThree : Tower(Material.BONE) {
     init {
         val meta = this.itemMeta
-        meta!!.setDisplayName("助弐郎")
-        meta.lore = mutableListOf("damage->40", "range->6.0", "speed->15", "cost->100")
+        meta!!.setDisplayName("助参郎")
+        meta.lore = mutableListOf("damage->250", "range->7.0", "speed->10", "cost->1200")
         this.itemMeta = meta
     }
 
-    override var name = "助弐郎"
-    override var damage = 40
-    override var range = 6.0
-    override var speed = 15
-    override var cost = 100
-    override var afters = mutableListOf<Tower>(SkeletonLevelThree)
+    override var name = "助参郎"
+    override var damage = 250
+    override var range = 7.0
+    override var speed = 10
+    override var cost = 1200
+    override var afters = mutableListOf<Tower>(SkeletonLevelFourTypeOne, SkeletonLevelFourTypeTwo)
     override var attackSound = Sound.ENTITY_ARROW_SHOOT
     override var attackModules = mutableListOf(CommonAttackModules.NULL.function)
     override fun createEntity(player: Player): LivingEntity {
@@ -30,19 +30,19 @@ object SkeletonLevelTwo : Tower(Material.BONE) {
         entity.setAI(false)
         entity.isInvulnerable = true
         entity.customName = name
-        entity.equipment!!.helmet = ItemStack(Material.LEATHER_HELMET)
-        entity.equipment!!.chestplate = ItemStack(Material.LEATHER_CHESTPLATE)
-        entity.equipment!!.leggings = ItemStack(Material.LEATHER_LEGGINGS)
-        entity.equipment!!.boots = ItemStack(Material.LEATHER_BOOTS)
+        entity.equipment!!.helmet = ItemStack(Material.IRON_HELMET)
+        entity.equipment!!.chestplate = ItemStack(Material.IRON_CHESTPLATE)
+        entity.equipment!!.leggings = ItemStack(Material.IRON_LEGGINGS)
+        entity.equipment!!.boots = ItemStack(Material.IRON_BOOTS)
         return entity
     }
 
-    override fun getAttackEntity(entity: Entity):MutableList<LivingEntity>{
+    override fun getAttackEntity(entity: Entity): MutableList<LivingEntity> {
         val list = mutableListOf<LivingEntity>()
         val listB = mutableListOf<LivingEntity>()
-        for(entity in entity.getNearbyEntities(range,10.0, range)){
-            if(entity is LivingEntity){
-                if(entity !is Player) {
+        for (entity in entity.getNearbyEntities(range, 10.0, range)) {
+            if (entity is LivingEntity) {
+                if (entity !is Player) {
                     listB.add(entity)
                 }
             }
