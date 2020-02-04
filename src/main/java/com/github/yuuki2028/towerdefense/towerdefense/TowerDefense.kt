@@ -6,6 +6,7 @@ import com.github.yuuki2028.towerdefense.towerdefense.Commons.inventoryCommon
 import com.github.yuuki2028.towerdefense.towerdefense.Events.AttackEvent
 import com.github.yuuki2028.towerdefense.towerdefense.Monsters.Silverfish.SilverfishLevelOne
 import com.github.yuuki2028.towerdefense.towerdefense.Towers.Skeleton.SkeletonLevelOne
+import com.github.yuuki2028.towerdefense.towerdefense.Towers.Skeleton.SlimeLevelOne
 import net.minecraft.server.v1_15_R1.EntityInsentient
 import net.minecraft.server.v1_15_R1.PathfinderGoalSelector
 import org.bukkit.*
@@ -38,6 +39,7 @@ class TowerDefense : JavaPlugin(),Listener {
         logger.info(ChatColor.AQUA.toString()+"${TD}起動開始します")
         Bukkit.getPluginManager().registerEvents(this,this)
         registerTower(SkeletonLevelOne)
+        registerTower(SlimeLevelOne)
         registerMonster(SilverfishLevelOne)
         logger.info(ChatColor.AQUA.toString()+"${TD}起動完了")
     }

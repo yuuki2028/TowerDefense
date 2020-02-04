@@ -26,7 +26,7 @@ object SkeletonLevelFourTypeTwo : Tower(Material.BONE) {
     override var cost = 22000
     override var afters = mutableListOf<Tower>(SkeletonLevelFive)
     override var attackSound = Sound.ENTITY_ARROW_SHOOT
-    override var attackModules = mutableListOf(CommonAttackModules.ADDSPEEDDAMAGE.function)
+    override var attackModules = mutableListOf(CommonAttackModules.AddSpeedDamage.function)
     override fun createEntity(player: Player): LivingEntity {
         val entity = Bukkit.getWorld("world")!!.spawnEntity(TowerDefense.status[player.uniqueId]!!.spawnTowerLocation, EntityType.SKELETON) as Skeleton
         entity.setAI(false)

@@ -27,4 +27,17 @@ enum class CommonAttackModules(val function: (AttackEvent) -> AttackEvent) {
         (event.monster.entity as LivingEntity).addPotionEffect(PotionEffect(PotionEffectType.SLOW, 100, 0, false, false, false))
         return event
     }),
+    Slow2(fun(event: AttackEvent): AttackEvent {
+        (event.monster.entity as LivingEntity).addPotionEffect(PotionEffect(PotionEffectType.SLOW, 100, 1, false, false, false))
+        return event
+    }),
+    Slow3(fun(event: AttackEvent): AttackEvent {
+        (event.monster.entity as LivingEntity).addPotionEffect(PotionEffect(PotionEffectType.SLOW, 100, 2, false, false, false))
+        return event
+    }),
+    Slow4(fun(event: AttackEvent): AttackEvent {
+        (event.monster.entity as LivingEntity).addPotionEffect(PotionEffect(PotionEffectType.SLOW, 100, 3, false, false, false))
+        return event
+    }),
+
 }
